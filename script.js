@@ -1,19 +1,30 @@
-fetch('https://api.github.com/users/KateDoroshi')
+let body = document.body;
+let url = window.location.toString();
+
+let getName = (url) => {
+ let getUrl = url.split('=');
+ let userName = getUrl[1];
+ if (userName == undefined){
+   userName = 'KateDoroshi';
+ }
+ return userName;
+}
+let name = getName(url);
+
+fetch('https://api.github.com/users/' + name)
   .then(res => res.json()) 
   .then(json => {
     const avatar = json.avatar_url; 
-    const name = json.name; 
+    const login = json.name; 
     const bio = json.bio; 
     const link = json.html_url; 
-
-    const body = document.body; 
 
     const userPhoto = new Image(); 
     userPhoto.src = avatar; 
     body.appendChild(userPhoto); 
 
     const userName = document.createElement('a'); 
-    userName.innerHTML = name; 
+    userName.innerHTML = login; 
     userName.setAttribute('href', link);
     body.appendChild(userName); 
 
@@ -21,7 +32,7 @@ fetch('https://api.github.com/users/KateDoroshi')
     if (bio != null) {
   	  userBio.innerHTML = bio;
     } else {
-  	  userBio.innerHTML = 'Информация о пользователе не доступна';
+  	  alert('Информация о пользователе не доступна')
     }
     body.appendChild(userBio); 
   })
