@@ -16,10 +16,6 @@ const getDate = new Promise((resolve, reject) => {
 });
 const getDataUser = fetch(`https://api.github.com/users/${nick}`);
 
-const preloaderHide = () => {
-  preloader.style.display = 'none';
-}
-
 Promise.all([getDataUser, getDate])
 .then(([userData, nowDate]) => {
   data = userData;
